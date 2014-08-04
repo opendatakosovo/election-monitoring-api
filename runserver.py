@@ -160,10 +160,18 @@ def get_number_of_votes_casted_for_given_commune(year, election_type, election_r
 			},
 			{'$group':
 				{'_id':'$pollingStation.commune',
-				'tenAM':{'$sum':'$votingProcess.voters.howManyVotedBy.tenAM'},
-				'onePM':{'$sum':'$votingProcess.voters.howManyVotedBy.onePM'},
-				'fourPM':{'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'},
-				'sevenPM':{'$sum':'$votingProcess.voters.howManyVotedBy.sevenPM'}
+					'tenAM':{
+						'$sum':'$votingProcess.voters.howManyVotedBy.tenAM'
+							},
+					'onePM':{
+						'$sum':'$votingProcess.voters.howManyVotedBy.onePM'
+							},
+					'fourPM':{
+						'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'
+							},
+					'sevenPM':{
+						'$sum':'$votingProcess.voters.howManyVotedBy.sevenPM'
+							}
 				}
 			}
 		])
@@ -191,10 +199,17 @@ def get_number_of_votes_casted_for_given_polling_station(year, election_type, el
 			},
 			{'$group':
 				{'_id':'$pollingStation.commune',
-				'tenAM':{'$sum':'$votingProcess.voters.howManyVotedBy.tenAM'},
-				'onePM':{'$sum':'$votingProcess.voters.howManyVotedBy.onePM'},
-				'fourPM':{'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'},
-				'sevenPM':{'$sum':'$votingProcess.voters.howManyVotedBy.sevenPM'}
+					'tenAM':{
+						'$sum':'$votingProcess.voters.howManyVotedBy.tenAM'
+							},
+					'onePM':{
+						'$sum':'$votingProcess.voters.howManyVotedBy.onePM'
+							},
+					'fourPM':{'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'
+							},
+					'sevenPM':{
+							'$sum':'$votingProcess.voters.howManyVotedBy.sevenPM'
+							}
 				}
 			}
 		])
