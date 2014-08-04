@@ -81,7 +81,19 @@ def get_kvv_members_gender_distribution_for_given_commune(year, election_type, e
 	collection_name = utils.get_collection_name(year, election_type, election_round)
 	
 	# Execute query.
-	gender_observation = mongo.db[collection_name].aggregate([{ "$match": { "pollingStation.commune":commune_name } }, {'$group':{'_id':'$pollingStation.commune','total':{'$sum':'$preparation.votingMaterialsPlacedInAndOutVotingStation.kvvMembers.total'},'totalFemale':{'$sum':'$preparation.votingMaterialsPlacedInAndOutVotingStation.kvvMembers.female'}}}])
+	gender_observation = mongo.db[collection_name].aggregate([
+		{ "$match": 
+			{ "pollingStation.commune":commune_name }
+		}, 
+		{'$group':
+			{'_id':'$pollingStation.commune',
+			'total':
+				{'$sum':'$preparation.votingMaterialsPlacedInAndOutVotingStation.kvvMembers.total'},
+			'totalFemale':
+				{'$sum':'$preparation.votingMaterialsPlacedInAndOutVotingStation.kvvMembers.female'}
+			}
+		}
+	])
 	
 	# Create JSON response object.
 	resp = Response(response=json_util.dumps(gender_observation), mimetype='application/json')
