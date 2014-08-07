@@ -1,3 +1,4 @@
+import json
 class Utils(object):
 
 	def __init__(self):
@@ -18,3 +19,4 @@ class Utils(object):
 		collection_name = election_type + election_round + str(year)
 		
 		return collection_name
+
