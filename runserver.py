@@ -334,29 +334,43 @@ def search(year,election_type,election_round):
 	:param: polling_station: the name of the polling station.
 	:param: ultra_violet_control: checks if UV check happened in that polling station
 	:param: finger_sprayed: checks if finger spray happened in that polling station
-	:param:	query_method: the type of the query that is going to hit MongoDB,  AND/OR
 	'''
-	commune = request.args.get('commune')
-	polling_station = request.args.get('pollingStation')
-	ultra_violet_control = request.args.get('ultraVioletControl')
-	finger_sprayed = request.args.get('fingerSprayed')
-
-	# Get the name of the collection we must query on.
-	collection_name = utils.get_collection_name(year, election_type, election_round)
-	# Execute query.
-	# If the query_method is equals to "and", execute mongo query with $and operator
 	
-	search_results_and = mongo.db[collection_name].find({ 
-															"$and" : [ 
-																{"pollingStation.commune" : commune },
-																{"pollingStation.name" : polling_station},
-																{"votingProcess.voters.ultraVioletControl" : ultra_violet_control},
-																{"votingProcess.voters.fingerSprayed" : finger_sprayed }
-															]})
-	resp = Response(response = json_util.dumps(search_results_and), mimetype = 'application/json')
+	#Build the query into a dictionary
+	query_dict=[]
+
+	# Request the 'commune' property from the GET Method
+	if request.args.get('commune'):
+		# Append the query argument to the dictionary
+		query_dict.append({"pollingStation.commune" : request.args.get('commune')})
+
+	# Request the 'name' property from the GET Method
+	if request.args.get('pollingStation'):
+		# Append the query argument to the dictionary
+		query_dict.append({"pollingStation.name" : request.args.get('pollingStation')})
+
+	# Request the 'ultraVioletControl' property from the GET Method
+	if request.args.get('ultraVioletControl'):
+		# Append the query argument to the dictionary
+		query_dict.append({"votingProcess.voters.ultraVioletControl" : request.args.get('ultraVioletControl')})
+
+	# Request the 'fingerSprayed' property from the GET Method
+	if request.args.get('fingerSprayed'):
+		# Append the query argument to the dictionary
+		query_dict.append({"votingProcess.voters.fingerSprayed" : request.args.get('fingerSprayed')})
+	
+	# Get the 
+	collection_name = utils.get_collection_name(year, election_type, election_round)
+
+	# Execute query.
+	search_results = mongo.db[collection_name].find({"$and" : query_dict})
+
+	# Build the JSON response
+	resp = Response(response = json_util.dumps(search_results), mimetype = 'application/json')
 
 	# Return JSON response.
 	return resp
-
+		
+	
 if __name__ == '__main__':
 	app.run(host='127.0.0.1', port=5001, debug=True)
