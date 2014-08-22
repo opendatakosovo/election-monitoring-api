@@ -21,14 +21,14 @@ def index():
 	return 'Welcome to the Election Monitoring API. TODO: Instructions page.'
 
 
-@app.route('/api/kdi/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', methods=['GET'])
+@app.route('/api/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', methods=['GET'])
 def get_observations_for_given_commune(year, election_type, election_round, commune_name):
 	''' Get observations for given commune.
 	
-	:param: year: The year of the election
-	:param: election_type: The type of the election. Can be local (local-election) or general (general-election)
-	:param: election_round: The round of the election (e.g. firt-round, second-round...)
-	:param: commune_name: The name of the commune.
+	:param year: The year of the election
+	:param election_type: The type of the election. Can be local (local-election) or general (general-election)
+	:param election_round: The round of the election (e.g. firt-round, second-round...)
+	:param commune_name: The name of the commune.
 	'''
 
 	# Get the name of the collection we must query on.
@@ -43,15 +43,15 @@ def get_observations_for_given_commune(year, election_type, election_round, comm
 	# Return JSON response.
 	return resp
 
-@app.route('/api/kdi/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:polling_station_room>', methods=['GET'])
+@app.route('/api/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:polling_station_room>', methods=['GET'])
 def get_observations_for_given_room_number(year, election_type, election_round, commune_name, polling_station_name,polling_station_room):
 	''' Get observations for given room number.
 	
-	:param: year: The year of the election
-	:param: election_type: The type of the election. Can be local (local-election) or general (general-election)
-	:param: election_round: The round of the election (e.g. firt-round, second-round...)
-	:param: commune_name: The name of the commune.
-	:param: polling_station_name: The name of the polling station.
+	:param year: The year of the election
+	:param election_type: The type of the election. Can be local (local-election) or general (general-election)
+	:param election_round: The round of the election (e.g. firt-round, second-round...)
+	:param commune_name: The name of the commune.
+	:param polling_station_name: The name of the polling station.
 	'''
 		
 	# Get the name of the collection we must query on.
@@ -65,15 +65,15 @@ def get_observations_for_given_room_number(year, election_type, election_round, 
 
 	# Return JSON response.
 	return resp
-@app.route('/api/kdi/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', methods=['GET'])
+@app.route('/api/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', methods=['GET'])
 def get_observations_for_given_polling_station(year, election_type, election_round, commune_name, polling_station_name):
 	''' Get observations for given commune and polling station.
 	
-	:param: year: The year of the election
-	:param: election_type: The type of the election. Can be local (local-election) or general (general-election)
-	:param: election_round: The round of the election (e.g. firt-round, second-round...)
-	:param: commune_name: The name of the commune.
-	:param: polling_station_name: The name of the polling station.
+	:param year: The year of the election
+	:param election_type: The type of the election. Can be local (local-election) or general (general-election)
+	:param election_round: The round of the election (e.g. firt-round, second-round...)
+	:param commune_name: The name of the commune.
+	:param polling_station_name: The name of the polling station.
 	'''
 		
 	# Get the name of the collection we must query on.
@@ -88,14 +88,16 @@ def get_observations_for_given_polling_station(year, election_type, election_rou
 	# Return JSON response.
 	return resp
 
-@app.route('/api/kdi/observations/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', methods=['GET'])
-def get_kvv_members_gender_distribution_for_given_room(year, election_type, election_round, commune_name,polling_station_name,room_number):
+@app.route('/api/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', methods=['GET'])
+def get_kvv_members_gender_distribution_for_given_room(year, election_type, election_round, commune_name, polling_station_name, room_number):
 	''' Get the gender distribution of KVV members in a specified room.
 	
-	:param: year: The year of the election
-	:param: election_type: The type of the election. Can be local (local-election) or general (general-election)
-	:param: election_round: The round of the election (e.g. firt-round, second-round...)
-	:param: commune_name: the name of the commune.
+	:param year: The year of the election
+	:param election_type: The type of the election. Can be local (local-election) or general (general-election)
+	:param election_round: The round of the election (e.g. firt-round, second-round...)
+	:param commune_name: the name of the commune.
+	:param polling_station_name: The name of the polling station.
+	:param room_number: The number of the room.
 	'''
 	
 	# Get the name of the collection we must query on.
@@ -121,14 +123,14 @@ def get_kvv_members_gender_distribution_for_given_room(year, election_type, elec
 	
 	# Return JSON response.
 	return resp
-@app.route('/api/kdi/observations/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', methods=['GET'])
+@app.route('/api/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', methods=['GET'])
 def get_kvv_members_gender_distribution_for_given_commune(year, election_type, election_round, commune_name):
 	''' Get the gender distribution of KVV members in a specified commune.
 	
-	:param: year: The year of the election
-	:param: election_type: The type of the election. Can be local (local-election) or general (general-election)
-	:param: election_round: The round of the election (e.g. firt-round, second-round...)
-	:param: commune_name: the name of the commune.
+	:param year: The year of the election
+	:param election_type: The type of the election. Can be local (local-election) or general (general-election)
+	:param election_round: The round of the election (e.g. firt-round, second-round...)
+	:param commune_name: the name of the commune.
 	'''
 	
 	# Get the name of the collection we must query on.
@@ -151,21 +153,23 @@ def get_kvv_members_gender_distribution_for_given_commune(year, election_type, e
 	
 	# Create JSON response object.
 	resp = Response(response=json_util.dumps(gender_observation), mimetype='application/json')
+
+	print gender_observation
 	
 	# Return JSON response.
 	return resp
 
 	
-@app.route('/api/kdi/observations/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', methods=['GET'])
+@app.route('/api/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', methods=['GET'])
 def get_kvv_members_gender_distribution_for_given_polling_station(year, election_type, election_round, commune_name, polling_station_name):
 	
 	''' Get the gender distribution of KVV members in a specified polling station.
 	
-	:param: year: The year of the election
-	:param: election_type: The type of the election. Can be local (local-election) or general (general-election)
-	:param: election_round: The round of the election (e.g. firt-round, second-round...)
-	:param: commune_name: the name of the commune.
-	:param: polling_station_name: the name of the polling station.
+	:param year: The year of the election
+	:param election_type: The type of the election. Can be local (local-election) or general (general-election)
+	:param election_round: The round of the election (e.g. firt-round, second-round...)
+	:param commune_name: the name of the commune.
+	:param polling_station_name: the name of the polling station.
 	'''
 
 	# Get the name of the collection we must query on.
@@ -193,15 +197,15 @@ def get_kvv_members_gender_distribution_for_given_polling_station(year, election
 	return resp
 
 
-@app.route('/api/kdi/observations/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', methods=['GET'])
+@app.route('/api/kdi/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', methods=['GET'])
 def get_number_of_votes_casted_for_given_commune(year, election_type, election_round, commune_name):
 	''' Get the number of votes casted in a specified commune.
 	The votes are grouped by the following hours: 10 AM, 1 PM, 4 PM, and 7 PM.
 	
-	:param: year: The year of the election
-	:param: election_type: The type of the election. Can be local (local-election) or general (general-election)
-	:param: election_round: The round of the election (e.g. firt-round, second-round...)
-	:param: commune_name: the name of the commune.
+	:param year: The year of the election
+	:param election_type: The type of the election. Can be local (local-election) or general (general-election)
+	:param election_round: The round of the election (e.g. firt-round, second-round...)
+	:param commune_name: the name of the commune.
 	'''
 	
 	# Get the name of the collection we must query on.
@@ -216,16 +220,16 @@ def get_number_of_votes_casted_for_given_commune(year, election_type, election_r
 				{'_id':'$pollingStation.communeSlug',
 					'tenAM':{
 						'$sum':'$votingProcess.voters.howManyVotedBy.tenAM'
-							},
+					},
 					'onePM':{
 						'$sum':'$votingProcess.voters.howManyVotedBy.onePM'
-							},
+					},
 					'fourPM':{
 						'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'
-							},
+					},
 					'sevenPM':{
 						'$sum':'votingProcess.voters.howManyVotedBy.sevenPM'
-							}
+					}
 				}
 			}
 		])
@@ -237,16 +241,16 @@ def get_number_of_votes_casted_for_given_commune(year, election_type, election_r
 	return resp
 
 
-@app.route('/api/kdi/observations/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', methods=['GET'])
+@app.route('/api/kdi/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', methods=['GET'])
 def get_number_of_votes_casted_for_given_polling_station(year, election_type, election_round, commune_name, polling_station_name):
 	''' Get the number of votes casted in a specified commune and polling stations.
 	The votes are grouped by the following hours: 10 AM, 1 PM, 4 PM, and 7 PM.
 	
-	:param: year: The year of the election
-	:param: election_type: The type of the election. Can be local (local-election) or general (general-election)
-	:param: election_round: The round of the election (e.g. firt-round, second-round...)
-	:param: commune_name: the name of the commune.
-	:param: polling_station_name: the name of the polling station.
+	:param year: The year of the election
+	:param election_type: The type of the election. Can be local (local-election) or general (general-election)
+	:param election_round: The round of the election (e.g. firt-round, second-round...)
+	:param commune_name: the name of the commune.
+	:param polling_station_name: the name of the polling station.
 	'''
 	# Get the name of the collection we must query on.
 	collection_name = utils.get_collection_name(year, election_type, election_round)
@@ -259,15 +263,16 @@ def get_number_of_votes_casted_for_given_polling_station(year, election_type, el
 				{'_id':'$pollingStation.communeSlug',
 					'tenAM':{
 						'$sum':'$votingProcess.voters.howManyVotedBy.tenAM'
-							},
+					},
 					'onePM':{
 						'$sum':'$votingProcess.voters.howManyVotedBy.onePM'
-							},
-					'fourPM':{'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'
-							},
+					},
+					'fourPM':{
+						'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'
+					},
 					'sevenPM':{
 						'$sum':'votingProcess.voters.howManyVotedBy.sevenPM'
-							}
+					}
 				}
 			}
 		])
@@ -278,17 +283,17 @@ def get_number_of_votes_casted_for_given_polling_station(year, election_type, el
 	# Return JSON response.
 	return resp
 
-@app.route('/api/kdi/observations/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', methods=['GET'])
+@app.route('/api/kdi/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', methods=['GET'])
 def get_number_of_votes_casted_for_given_room(year, election_type, election_round, commune_name,polling_station_name,room_number):
 	''' Get the number of votes casted in a specified room.
 	The votes are grouped by the following hours: 10 AM, 1 PM, 4 PM, and 7 PM.
 	
-	:param: year: The year of the election
-	:param: election_type: The type of the election. Can be local (local-election) or general (general-election)
-	:param: election_round: The round of the election (e.g. firt-round, second-round...)
-	:param: commune_name: the name of the commune.
-	:param: polling_station_name: the name of the polling station.
-	:param: polling_station_name: the name of the polling station.
+	:param year: The year of the election
+	:param election_type: The type of the election. Can be local (local-election) or general (general-election)
+	:param election_round: The round of the election (e.g. firt-round, second-round...)
+	:param commune_name: the name of the commune.
+	:param polling_station_name: the name of the polling station.
+	:param polling_station_name: the name of the polling station.
 	'''
 	
 	# Get the name of the collection we must query on.
@@ -297,7 +302,7 @@ def get_number_of_votes_casted_for_given_room(year, election_type, election_roun
 	# Execute query.
 	voted_by_observation = mongo.db[collection_name].aggregate([
 			{ "$match":
-				{ "pollingStation.communeSlug":commune_name,"pollingStation.nameSlug":polling_station_name,"pollingStation.roomNumber":room_number } 
+				{ "pollingStation.communeSlug":commune_name, "pollingStation.nameSlug":polling_station_name, "pollingStation.roomNumber":room_number } 
 			},
 			{'$group':
 				{'_id':'$pollingStation.roomNumber',
@@ -324,17 +329,17 @@ def get_number_of_votes_casted_for_given_room(year, election_type, election_roun
 	return resp
 
 
-@app.route('/kdi/observations/search/<int:year>/<string:election_type>/<string:election_round>/', methods=['GET'])
+@app.route('/kdi/search/<int:year>/<string:election_type>/<string:election_round>/', methods=['GET'])
 def search(year,election_type,election_round):
 	''' Get the results for the parameters that are taken from the GET Method.
 
-	:param: year: The year of the election
-	:param: election_type: The type of the election. Can be local (local-election) or general (general-election)
-	:param: election_round: The round of the election (e.g. firt-round, second-round...)
-	:param: commune_name: the name of the commune.
-	:param: polling_station: the name of the polling station.
-	:param: ultra_violet_control: checks if UV check happened in that polling station
-	:param: finger_sprayed: checks if finger spray happened in that polling station
+	:param year: The year of the election
+	:param election_type: The type of the election. Can be local (local-election) or general (general-election)
+	:param election_round: The round of the election (e.g. firt-round, second-round...)
+	:param commune_name: the name of the commune.
+	:param polling_station: the name of the polling station.
+	:param ultra_violet_control: checks if UV check happened in that polling station
+	:param finger_sprayed: checks if finger spray happened in that polling station
 	'''
 	
 	#Build the query into a dictionary
