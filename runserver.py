@@ -20,6 +20,34 @@ mongo = PyMongo(app, config_prefix='MONGO')
 def index():
 	return 'Welcome to the Election Monitoring API. TODO: Instructions page.'
 
+@app.route('/psi')
+def polling_station_info():
+	polling_stations = mongo.db.localelectionsfirstround2013.find().sort([("pollingStation.commune", pymongo.ASCENDING),("pollingStation.communeSlug", pymongo.ASCENDING),("pollingStation.nameSlug", pymongo.ASCENDING), ("pollingStation.name", pymongo.ASCENDING), ("pollingStation.roomNumber", pymongo.ASCENDING)])
+
+	polling_station_grouped_by_commune_dict = OrderedDict()
+
+	for idx, polling_station in enumerate(polling_stations):
+
+		
+		commune_slug = polling_station['pollingStation']['communeSlug']
+		commune_name = polling_station['pollingStation']['commune']
+		polling_station_name = polling_station['pollingStation']['name']
+		polling_station_name_slug = polling_station['pollingStation']['nameSlug']
+		
+		# If first time we stumble on commune, create a dictionary entry for it.
+		# The value for each dictionary entry is a set of election observations docs for this commune.
+		if commune_slug not in polling_station_grouped_by_commune_dict:
+			polling_station_grouped_by_commune_dict[commune_slug] = {'name': commune_name}
+			polling_station_grouped_by_commune_dict[commune_slug]['pollingStations'] = [{'name':commune_slug, 'slug':commune_name}]
+
+
+		else:
+			polling_station_grouped_by_commune_dict[commune_slug]['pollingStations'].append({'name':polling_station_name,'slug':polling_station_name_slug})
+
+	resp = Response(response=json_util.dumps(polling_station_grouped_by_commune_dict), mimetype='application/json')
+
+	# Return JSON response.
+	return resp
 
 @app.route('/api/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', methods=['GET'])
 def get_observations_for_given_commune(year, election_type, election_round, commune_name):
