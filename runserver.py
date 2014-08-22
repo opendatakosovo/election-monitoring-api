@@ -15,6 +15,7 @@ app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'kdi'
 mongo = PyMongo(app, config_prefix='MONGO')
 
+	#FIXME: Results not showing for sevenPM sum of voters
 @app.route('/')
 def index():
 	return 'Welcome to the Election Monitoring API. TODO: Instructions page.'
@@ -34,7 +35,7 @@ def get_observations_for_given_commune(year, election_type, election_round, comm
 	collection_name = utils.get_collection_name(year, election_type, election_round)
 	
 	# Execute query.
-	observations = mongo.db[collection_name].find({'pollingStation.commune': commune_name})
+	observations = mongo.db[collection_name].find({'pollingStation.communeSlug': commune})
 	
 	# Create JSON response object.
 	resp = Response(response=json_util.dumps(observations), mimetype='application/json')
@@ -57,7 +58,7 @@ def get_observations_for_given_room_number(year, election_type, election_round, 
 	collection_name = utils.get_collection_name(year, election_type, election_round)
 	
 	# Execute query.
-	observations = mongo.db[collection_name].find({'pollingStation.commune': commune_name, 'pollingStation.name': polling_station_name , 'pollingStation.roomNumber':polling_station_room})
+	observations = mongo.db[collection_name].find({'pollingStation.communeSlug': commune_name, 'pollingStation.nameSlug': polling_station_name , 'pollingStation.roomNumber':polling_station_room})
 	
 	# Create JSON response object.
 	resp = Response(response=json_util.dumps(observations), mimetype='application/json')
@@ -79,7 +80,7 @@ def get_observations_for_given_polling_station(year, election_type, election_rou
 	collection_name = utils.get_collection_name(year, election_type, election_round)
 	
 	# Execute query.
-	observations = mongo.db[collection_name].find({'pollingStation.commune': commune_name, 'pollingStation.name': polling_station_name})
+	observations = mongo.db[collection_name].find({'pollingStation.communeSlug': commune_name, 'pollingStation.nameSlug': polling_station_name})
 	
 	# Create JSON response object.
 	resp = Response(response=json_util.dumps(observations), mimetype='application/json')
@@ -103,7 +104,7 @@ def get_kvv_members_gender_distribution_for_given_room(year, election_type, elec
 	# Execute query.
 	gender_observation = mongo.db[collection_name].aggregate([
 		{ "$match": 
-			{ "pollingStation.commune":commune_name , "pollingStation.name":polling_station_name ,"pollingStation.roomNumber":room_number}
+			{ "pollingStation.communeSlug":commune_name , "pollingStation.nameSlug":polling_station_name ,"pollingStation.roomNumber":room_number}
 		}, 
 		{'$group':
 			{'_id':'$pollingStation.roomNumber',
@@ -136,10 +137,10 @@ def get_kvv_members_gender_distribution_for_given_commune(year, election_type, e
 	# Execute query.
 	gender_observation = mongo.db[collection_name].aggregate([
 		{ "$match": 
-			{ "pollingStation.commune":commune_name }
+			{ "pollingStation.communeSlug":commune_name }
 		}, 
 		{'$group':
-			{'_id':'$pollingStation.commune',
+			{'_id':'$pollingStation.communeSlug',
 			'total':
 				{'$sum':'$preparation.votingMaterialsPlacedInAndOutVotingStation.kvvMembers.total'},
 			'totalFemale':
@@ -173,10 +174,10 @@ def get_kvv_members_gender_distribution_for_given_polling_station(year, election
 	# Execute query.
 	gender_observation_by_polling_station = mongo.db[collection_name].aggregate([
 		{ "$match": 
-			{ "pollingStation.commune":commune_name,  "pollingStation.name":polling_station_name}
+			{ "pollingStation.communeSlug":commune_name,  "pollingStation.nameSlug":polling_station_name}
 		}, 
 		{'$group':
-			{'_id':'$pollingStation.commune',
+			{'_id':'$pollingStation.communeSlug',
 			'total':
 				{'$sum':'$preparation.votingMaterialsPlacedInAndOutVotingStation.kvvMembers.total'},
 			'totalFemale':
@@ -209,10 +210,10 @@ def get_number_of_votes_casted_for_given_commune(year, election_type, election_r
 	# Execute query.
 	voted_by_observation = mongo.db[collection_name].aggregate([
 			{ "$match":
-				{ "pollingStation.commune":commune_name } 
+				{ "pollingStation.communeSlug":commune_name } 
 			},
 			{'$group':
-				{'_id':'$pollingStation.commune',
+				{'_id':'$pollingStation.communeSlug',
 					'tenAM':{
 						'$sum':'$votingProcess.voters.howManyVotedBy.tenAM'
 							},
@@ -223,7 +224,7 @@ def get_number_of_votes_casted_for_given_commune(year, election_type, election_r
 						'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'
 							},
 					'sevenPM':{
-						'$sum':'$votingProcess.voters.howManyVotedBy.sevenPM'
+						'$sum':'votingProcess.voters.howManyVotedBy.sevenPM'
 							}
 				}
 			}
@@ -252,10 +253,10 @@ def get_number_of_votes_casted_for_given_polling_station(year, election_type, el
 	# Execute query.
 	voted_by_observation = mongo.db[collection_name].aggregate([
 			{ "$match":
-				{ "pollingStation.commune":commune_name,  "pollingStation.name":polling_station_name}
+				{ "pollingStation.communeSlug":commune_name,  "pollingStation.nameSlug":polling_station_name}
 			},
 			{'$group':
-				{'_id':'$pollingStation.commune',
+				{'_id':'$pollingStation.communeSlug',
 					'tenAM':{
 						'$sum':'$votingProcess.voters.howManyVotedBy.tenAM'
 							},
@@ -265,7 +266,7 @@ def get_number_of_votes_casted_for_given_polling_station(year, election_type, el
 					'fourPM':{'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'
 							},
 					'sevenPM':{
-							'$sum':'$votingProcess.voters.howManyVotedBy.sevenPM'
+						'$sum':'votingProcess.voters.howManyVotedBy.sevenPM'
 							}
 				}
 			}
@@ -296,7 +297,7 @@ def get_number_of_votes_casted_for_given_room(year, election_type, election_roun
 	# Execute query.
 	voted_by_observation = mongo.db[collection_name].aggregate([
 			{ "$match":
-				{ "pollingStation.commune":commune_name,"pollingStation.name":polling_station_name,"pollingStation.roomNumber":room_number } 
+				{ "pollingStation.communeSlug":commune_name,"pollingStation.nameSlug":polling_station_name,"pollingStation.roomNumber":room_number } 
 			},
 			{'$group':
 				{'_id':'$pollingStation.roomNumber',
@@ -310,7 +311,7 @@ def get_number_of_votes_casted_for_given_room(year, election_type, election_roun
 						'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'
 							},
 					'sevenPM':{
-						'$sum':'$votingProcess.voters.howManyVotedBy.sevenPM'
+						'$sum':'votingProcess.voters.howManyVotedBy.sevenPM'
 							}
 				}
 			}
@@ -342,12 +343,12 @@ def search(year,election_type,election_round):
 	# Request the 'commune' property from the GET Method
 	if request.args.get('commune'):
 		# Append the query argument to the dictionary
-		query_dict.append({"pollingStation.commune" : request.args.get('commune')})
+		query_dict.append({"pollingStation.communeSlug" : request.args.get('commune')})
 
 	# Request the 'name' property from the GET Method
 	if request.args.get('pollingStation'):
 		# Append the query argument to the dictionary
-		query_dict.append({"pollingStation.name" : request.args.get('pollingStation')})
+		query_dict.append({"pollingStation.nameSlug" : request.args.get('pollingStation')})
 
 	# Request the 'ultraVioletControl' property from the GET Method
 	if request.args.get('ultraVioletControl'):
