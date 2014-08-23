@@ -20,9 +20,12 @@ mongo = PyMongo(app, config_prefix='MONGO')
 def index():
 	return 'Welcome to the Election Monitoring API. TODO: Instructions page.'
 
-@app.route('/psi')
-def polling_station_info():
-	polling_stations = mongo.db.localelectionsfirstround2013.find().sort([("pollingStation.commune", pymongo.ASCENDING),("pollingStation.communeSlug", pymongo.ASCENDING),("pollingStation.nameSlug", pymongo.ASCENDING), ("pollingStation.name", pymongo.ASCENDING), ("pollingStation.roomNumber", pymongo.ASCENDING)])
+@app.route('/api/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>')
+def get_polling_stations(year, election_type, election_round):
+
+	collection_name = utils.get_collection_name(year, election_type, election_round)
+
+	polling_stations = mongo.db[collection_name].find().sort([("pollingStation.commune", pymongo.ASCENDING),("pollingStation.communeSlug", pymongo.ASCENDING),("pollingStation.nameSlug", pymongo.ASCENDING), ("pollingStation.name", pymongo.ASCENDING), ("pollingStation.roomNumber", pymongo.ASCENDING)])
 
 	polling_station_grouped_by_commune_dict = OrderedDict()
 
