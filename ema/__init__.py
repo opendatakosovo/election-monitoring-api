@@ -129,7 +129,7 @@ def register_url_rules(app):
 	
 	app.add_url_rule('/kdi/search/<int:year>/<string:election_type>/<string:election_round>/', view_func=Search.as_view('search'))
 	# Election selection for observation: observing organization, year, election type and election round.
-	app.add_url_rule('/api/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>', view_func=PollingStation.as_view('polling_stations'))
+	app.add_url_rule('/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>', view_func=PollingStation.as_view('polling_stations'))
 
 	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=CommuneObservation.as_view('commune'))
 	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', view_func=PollingStationObservation.as_view('polling_station'))
