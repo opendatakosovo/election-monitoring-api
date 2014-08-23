@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, Response
+from flask import render_template, Flask, request, render_template, Response
 from flask.ext.pymongo import PyMongo
 from flask import request
 import pymongo
@@ -15,10 +15,9 @@ app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'kdi'
 mongo = PyMongo(app, config_prefix='MONGO')
 
-	#FIXME: Results not showing for sevenPM sum of voters
 @app.route('/')
 def index():
-	return 'Welcome to the Election Monitoring API. TODO: Instructions page.'
+	return render_template('index.html')
 
 @app.route('/api/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>')
 def get_polling_stations(year, election_type, election_round):
