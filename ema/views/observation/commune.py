@@ -21,7 +21,7 @@ class CommuneObservation(View):
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 	
 		# Execute query.
-		observations = mongo.db[collection_name].find({'pollingStation.communeSlug': commune})
+		observations = mongo.db[collection_name].find({'pollingStation.communeSlug':  commune_name})
 	
 		# Create JSON response object.
 		resp = Response(response=json_util.dumps(observations), mimetype='application/json')

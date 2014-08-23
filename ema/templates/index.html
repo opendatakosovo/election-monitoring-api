@@ -1,4 +1,92 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1>Let's do this.</h1>
+<h3>Election Monitoring<hr/></h3>
+<p>
+	<a href="http://en.wikipedia.org/wiki/Election_monitoring">Election monitoring</a> is the observation of an election by one or more independent parties, typically from another country or a non-governmental organization (NGO), primarily to assess the conduct of an election process on the basis of national legislation and international election standards. 
+</p>
+<p>
+	This Application Programming Interface (API) gives software developers access to election monitoring data collected by various organizations specialised in observing Kosovo's electoral process. 
+</p>
+<p>
+	We care about sharing and improvements so the software behind this API is free and open under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU GPL v2.0</a> license. Anyone who distributes the code or a derivative work is required to make the source available under the same terms.
+</p>
+
+
+<br/>
+
+<h3>Data<hr/></h3>
+<p>
+	Currently, Kosova Democratic Institute (KDI)'s observations on Kosovo's 2013 local elections can be accessed with this API.<br/>
+	KDI's observations of the 2014 general elections will soon be made available.
+</p>
+
+<br/>
+
+<h3>Disclaimer<hr/></h3>
+<p>
+	This API is an <a href="http://en.wiktionary.org/wiki/alpha_version">alpha version</a>. This means that it is still under development and may be subject to bugs. You can help by <a href="mailto:info@opendatakosovo.org"/>contacting us</a> to report issues or contribute fixes and improvements to the <a href="https://github.com/opendatakosovo/election-monitoring-api">code base</a>.
+</p>
+
+<br/>
+
+
+<h3>Getting Data<hr/></h3>
+
+<p>
+	Retrieving data from the API is done through <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> HTTP GET Requests.
+</p>
+
+<p>
+	The directory structure of the GET requests typically follow the following pattern:<br/>
+	http://opendatakosovo.org/apis/election-monitoring/<font>&lt;monitoring-organization&gt;</font>/<font>&lt;data-identifier&gt;</font>/<font>&lt;election-year&gt;</font>/<font>&lt;election-type&gt;</font>/<font>&lt;election-round&gt;</font>/<font>&lt;commune-name&gt;</font>/<font>&lt;polling-station-name&gt;</font>
+</p>
+
+<br/>
+
+<h3>Sample Requests<hr/></h3>
+<h4>Getting data collected by KDI</h4>
+
+<p>
+	<strong>Get polling stations grouped by commune:</strong></br>
+	http://opendatakosovo.org/apis/election-monitoring/kdi/polling-stations/2013/local-elections/first-round
+</p>
+
+<p>
+	<strong>Get observations for a given commune:</strong></br>
+	http://opendatakosovo.org/apis/election-monitoring/kdi/observations/2013/local-elections/first-round/ferizaj
+</p>
+
+<p>
+	<strong>Get observations for a given commune and polling station:</strong></br>
+http://opendatakosovo.org/apis/election-monitoring/kdi/observations/2013/local-elections/first-round/ferizaj/zaskok
+</p>
+
+<p>
+	<strong>Get KVV members gender distribtion for a given commune:</strong></br>
+http://opendatakosovo.org/apis/election-monitoring/kdi/kvv-members-gender-distribution/2013/local-elections/first-round/ferizaj
+</p>
+
+<p>
+	<strong>Get KVV members gender distribtion for a given commune and polling station:</strong></br>
+http://opendatakosovo.org/apis/election-monitoring/kdi/kvv-members-gender-distribution/2013/local-elections/first-round/ferizaj/zaskok
+</p>
+
+<p>
+	<strong>Get votes count for given commune:</strong></br>
+http://opendatakosovo.org/apis/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj/zaskok
+</p>
+
+<p>
+	<strong>Get votes count for given commune and polling station:</strong></br>
+http://opendatakosovo.org/apis/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj/zaskok
+</p>
+
+<br/>
+
+<h4>Searching the KDI dataset</h4>
+<p>
+	TODO: Write basic instructions.
+</p>
+
+<br/></br>
 {% endblock %}

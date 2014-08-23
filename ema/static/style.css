@@ -24,6 +24,7 @@ body {
 
 /* Other styles
 -------------------------------------------------- */
-.info-text{
-	font-size: 18px;
+font{
+	color: red;
+	font-style: italic;
 }
