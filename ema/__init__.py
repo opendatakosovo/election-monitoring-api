@@ -106,8 +106,8 @@ def configure_logging(app):
 from views.index import Index
 from views.polling_stations import PollingStation
 from views.observation.commune import CommuneObservation
-from views.observation.room import RoomObservation
 from views.observation.polling_station import PollingStationObservation
+from views.observation.room import RoomObservation
 from views.kvv.room_gender_distribution import KvvRoomGenderDistribution
 from views.kvv.commune_gender_distribution import KvvCommuneGenderDistribution
 from views.kvv.polling_station_gender_distribution import KvvPollingStationGenderDistribution
@@ -134,7 +134,6 @@ def register_url_rules(app):
 	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=CommuneObservation.as_view('commune'))
 	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', view_func=PollingStationObservation.as_view('polling_station'))
 	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:polling_station_room>', view_func=RoomObservation.as_view('room'))
-	
 
 	app.add_url_rule('/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', view_func=KvvRoomGenderDistribution.as_view('room_gender_distribution'))
 	app.add_url_rule('/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=KvvCommuneGenderDistribution.as_view('commune_gender_distribution'))
