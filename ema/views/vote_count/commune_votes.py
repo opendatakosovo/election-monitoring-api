@@ -36,7 +36,7 @@ class CommuneVoteCount(View):
 							'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'
 						},
 						'sevenPM':{
-							'$sum':'votingProcess.voters.howManyVotedBy.sevenPM'
+							'$sum':'$votingProcess.voters.howManyVotedBy.sevenPM'
 						}
 					}
 				}
