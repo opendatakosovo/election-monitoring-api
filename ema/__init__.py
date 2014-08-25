@@ -123,26 +123,68 @@ def register_url_rules(app):
 	:param app: The Flask application instance.
 	''' 
 
-	# Index page form.
+	# Show instructional index page.
 	app.add_url_rule('/', view_func=Index.as_view('index'))
 
-	
+	# Search observation documents
 	app.add_url_rule('/kdi/search/<int:year>/<string:election_type>/<string:election_round>/', view_func=Search.as_view('search'), methods=['GET'])
 
+	# Register URL rules for polling staions.
+	register_url_rules_polling_stations(app)
+
+	# Register URL rules for observations.
+	register_url_rules_observations(app)
+
+	# Register URL rules for KVV members gender distribution.
+	register_url_rules_kvv_members_gender_distribution(app)
+	
+	# Register URL rults for hour votes count.
+	register_url_rules_hour_votes_count(app)
+
+
+def register_url_rules_polling_stations(app):
 	# Election selection for observation: observing organization, year, election type and election round.
 	app.add_url_rule('/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>', view_func=PollingStation.as_view('polling_stations'))
 
+
+def register_url_rules_observations(app):
+	''' Register URL rules for observations.
+	:param app: The application instance.
+	'''
+	# Get observations for a specified commune.
 	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=CommuneObservation.as_view('commune'))
+
+	# Get observations for a specified commune and polling station.
 	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', view_func=PollingStationObservation.as_view('polling_station'))
+
+	# Get observations for a specified commune, polling station, and polling station room.
 	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:polling_station_room>', view_func=RoomObservation.as_view('room'))
 
-	app.add_url_rule('/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', view_func=KvvRoomGenderDistribution.as_view('room_gender_distribution'))
+def register_url_rules_kvv_members_gender_distribution(app):
+	''' Register URL rules for KVV members gender distribution.
+	:param app: The application instance.
+	'''
+
+	# Get KVV members gender distribution for a given commune.
 	app.add_url_rule('/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=KvvCommuneGenderDistribution.as_view('commune_gender_distribution'))
+
+	# Get KVV members gender distribution for a given commune and polling station.
 	app.add_url_rule('/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', view_func=KvvPollingStationGenderDistribution.as_view('polling_station_gender_distribution'))
 
+	# Get KVV members gender distribution for a given commune, polling station, and polling station room number.
+	app.add_url_rule('/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', view_func=KvvRoomGenderDistribution.as_view('room_gender_distribution'))
+
+	
+def register_url_rules_hour_votes_count(app):
+	''' Register URL rules for hour votes count.
+	:param app: The application instance.
+	'''
+	
+	# Get hour votes count for given commune.
 	app.add_url_rule('/kdi/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=CommuneVoteCount.as_view('commune_votes'))
+
+	# Get hour votes count for given commune and polling station.
 	app.add_url_rule('/kdi/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', view_func=PollingStationVoteCount.as_view('polling_station_votes'))
+
+	# Get hour votes count for given commune, polling station, and room number.
 	app.add_url_rule('/kdi/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', view_func=RoomVoteCount.as_view('room_votes'))
-
-
-
