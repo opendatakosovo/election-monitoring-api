@@ -129,7 +129,6 @@ from views.vote_count.room_votes import RoomVoteCount
 from views.search import Search
 
 def register_url_rules(app):
-
 	''' Register the URL rules. 
 		Use pluggable class-based views: http://flask.pocoo.org/docs/views/
 	:param app: The Flask application instance.
