@@ -127,7 +127,7 @@ def register_url_rules(app):
 	app.add_url_rule('/', view_func=Index.as_view('index'))
 
 	# Search observation documents
-	app.add_url_rule('/kdi/search/<int:year>/<string:election_type>/<string:election_round>/', view_func=Search.as_view('search'), methods=['GET'])
+	app.add_url_rule('/kdi/search/<int:year>/<string:election_type>/<string:election_round>/', view_func=Search.as_view('search'))
 
 	# Register URL rules for polling staions.
 	register_url_rules_polling_stations(app)
