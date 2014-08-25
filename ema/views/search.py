@@ -1,13 +1,13 @@
 from flask import Flask, request, render_template, Response
-from flask.views import View
+from flask.views import MethodView
 from bson import json_util
 
 from ema import utils, mongo
 
 
-class Search(View):
+class Search(MethodView):
 	methods = ['GET']
-	def dispatch_request(year,election_type,election_round):
+	def dispatch_request(self,year,election_type,election_round):
 		''' Get the results for the parameters that are taken from the GET Method.
 
 		:param year: The year of the election
@@ -25,12 +25,12 @@ class Search(View):
 		# Request the 'commune' property from the GET Method
 		if request.args.get('commune'):
 			# Append the query argument to the dictionary
-			query_dict.append({"pollingStation.communeSlug" : request.args.get('commune')})
+			query_dict.append({"pollingStation.commune" : request.args.get('commune')})
 
 		# Request the 'name' property from the GET Method
 		if request.args.get('pollingStation'):
 			# Append the query argument to the dictionary
-			query_dict.append({"pollingStation.nameSlug" : request.args.get('pollingStation')})
+			query_dict.append({"pollingStation.name" : request.args.get('pollingStation')})
 
 		# Request the 'ultraVioletControl' property from the GET Method
 		if request.args.get('ultraVioletControl'):
@@ -45,6 +45,8 @@ class Search(View):
 		# Get the 
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 
+		print collection_name
+		print query_dict
 		# Execute query.
 		search_results = mongo.db[collection_name].find({"$and" : query_dict})
 
