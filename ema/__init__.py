@@ -103,17 +103,29 @@ def configure_logging(app):
 	app.logger.info('Logging to: %s', log_path)
 
 
+# Index page view.
 from views.index import Index
-from views.polling_stations import PollingStation
+
+# Polling station views.
+from views.polling_station.all import PollingStation
+from views.polling_station.commune import CommunePollingStation
+from views.polling_station.polling_station import PollingStationPollingStation
+
+# Observation views.
 from views.observation.commune import CommuneObservation
 from views.observation.polling_station import PollingStationObservation
 from views.observation.room import RoomObservation
+
+# KVV members gender distribution views.
 from views.kvv.room_gender_distribution import KvvRoomGenderDistribution
 from views.kvv.commune_gender_distribution import KvvCommuneGenderDistribution
 from views.kvv.polling_station_gender_distribution import KvvPollingStationGenderDistribution
+
+# Hour vote count views.
 from views.vote_count.commune_votes import CommuneVoteCount
 from views.vote_count.polling_station_votes import PollingStationVoteCount
 from views.vote_count.room_votes import RoomVoteCount
+
 from views.search import Search
 
 def register_url_rules(app):
@@ -143,8 +155,18 @@ def register_url_rules(app):
 
 
 def register_url_rules_polling_stations(app):
-	# Election selection for observation: observing organization, year, election type and election round.
+	''' Register URL rules for polling stations.
+	:param app: The application instance.
+	'''
+	# Get all polling station for a given election.
 	app.add_url_rule('/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>', view_func=PollingStation.as_view('polling_stations'))
+
+	# Get polling station for a given commune.
+	app.add_url_rule('/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>', view_func=CommunePollingStation.as_view('commung_polling_stations'))
+
+	# Get polling station for a given polling station. Silly, but sometimes we only have slug and want the value.
+	# Should implement a less hardcore way to get value for a slug.
+	app.add_url_rule('/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>', view_func=PollingStationPollingStation.as_view('polling_station_polling_stations'))
 
 
 def register_url_rules_observations(app):

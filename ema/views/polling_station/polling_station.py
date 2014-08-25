@@ -6,16 +6,23 @@ import pymongo
 from ema import utils, mongo
 
 
-class PollingStation(View):
+class PollingStationPollingStation(View):
 
 	methods = ['GET']
 
-	def dispatch_request(self, year, election_type, election_round):
+	def dispatch_request(self, year, election_type, election_round, commune_slug, polling_station_slug):
 
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 
-		polling_stations = mongo.db[collection_name].find().sort([("pollingStation.communeSlug", pymongo.ASCENDING),("pollingStation.nameSlug", pymongo.ASCENDING), ("pollingStation.roomNumber", pymongo.ASCENDING)])
+		polling_stations = mongo.db[collection_name].find({
+			"pollingStation.communeSlug": commune_slug, 
+			"pollingStation.nameSlug": polling_station_slug
+		}).sort([
+			("pollingStation.nameSlug", pymongo.ASCENDING),
+			("pollingStation.roomNumber", pymongo.ASCENDING)
+		])
 
+		#FIXME: Extract method for the following logic and put it in a superclass.
 		polling_station_grouped_by_commune_dict = OrderedDict()
 
 		# This dictionary is for tracking purposes.
