@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, Response
 from flask.views import MethodView
 from bson import json_util
-
+import pymongo
 from ema import utils, mongo
 
 
@@ -48,7 +48,7 @@ class Search(MethodView):
 		print collection_name
 		print query_dict
 		# Execute query.
-		search_results = mongo.db[collection_name].find({"$and" : query_dict})
+		search_results = mongo.db[collection_name].find({"$and" : query_dict}).sort([("pollingStation.commune", pymongo.ASCENDING),("pollingStation.name", pymongo.ASCENDING), ("pollingStation.roomNumber", pymongo.ASCENDING)])
 
 		# Build the JSON response
 		resp = Response(response = json_util.dumps(search_results), mimetype = 'application/json')
