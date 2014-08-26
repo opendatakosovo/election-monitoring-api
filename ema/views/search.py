@@ -65,7 +65,6 @@ class Search(View):
 			# Append the query argument to the dictionary
 			query_dict.append({"preparation.missingMaterial.uvLamp" : bool(request.args.get('missing_uv_lamp'))})
 
-		print query_dict
 
 		# Get the collection name.
 		collection_name = utils.get_collection_name(year, election_type, election_round)
