@@ -39,7 +39,34 @@ class Search(View):
 		if request.args.get('finger_sprayed_select'):
 			# Append the query argument to the dictionary
 			query_dict.append({"votingProcess.voters.fingerSprayed" : request.args.get('finger_sprayed_select')})
-	
+
+		# Request the 'missing_voting_cabin' property from the GET Method.
+		if request.args.get('missing_voting_cabin') != 'None':
+			# Append the query argument to the dictionary
+			query_dict.append({"preparation.missingMaterial.votingCabin" : bool(request.args.get('missing_voting_cabin'))})
+
+		# Request the 'missing_ballot_box' property from the GET Method.
+		if request.args.get('missing_ballot_box')  != 'None':
+			# Append the query argument to the dictionary
+			query_dict.append({"preparation.missingMaterial.ballotBox" : bool(request.args.get('missing_ballot_box'))})
+
+		# Request the 'missing_ballots' property from the GET Method.
+		if request.args.get('missing_ballots')  != 'None':
+			# Append the query argument to the dictionary
+			query_dict.append({"preparation.missingMaterial.ballots" : bool(request.args.get('missing_ballots'))})
+
+		# Request the '' property from the GET Method.
+		if request.args.get('missing_voters_book')  != 'None':
+			# Append the query argument to the dictionary
+			query_dict.append({"preparation.missingMaterial.votersBook" : bool(request.args.get('missing_voters_book'))})
+
+		# Request the 'missing_uv_lamp' property from the GET Method.
+		if request.args.get('missing_uv_lamp')  != 'None':
+			# Append the query argument to the dictionary
+			query_dict.append({"preparation.missingMaterial.uvLamp" : bool(request.args.get('missing_uv_lamp'))})
+
+		print query_dict
+
 		# Get the collection name.
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 
