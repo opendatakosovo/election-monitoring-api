@@ -39,14 +39,16 @@ class PollingStationPollingStation(View):
 		
 			# If first time we stumble on commune, create a dictionary entry for it.
 			if commune_slug not in polling_station_grouped_by_commune_dict:
-				polling_station_grouped_by_commune_dict[commune_slug] = {'name': commune_name, 'slug': commune_slug}
-				polling_station_grouped_by_commune_dict[commune_slug]['pollingStations'] = [{'name':polling_station_name, 'slug':polling_station_name_slug}]
+				if polling_station_name != 'N/A' and polling_station_name != '':
+				
+					polling_station_grouped_by_commune_dict[commune_slug] = {'name': commune_name, 'slug': commune_slug}
+					polling_station_grouped_by_commune_dict[commune_slug]['pollingStations'] = [{'name':polling_station_name, 'slug':polling_station_name_slug}]
 
-				polling_station_slugs_grouped_by_commune_slug[commune_slug] = [polling_station_name_slug]
+					polling_station_slugs_grouped_by_commune_slug[commune_slug] = [polling_station_name_slug]
 
 			else:
 				# Don't add invalid station name.
-				if polling_station_name != 'N/A':
+				if polling_station_name != 'N/A' and polling_station_name != '':
 					# Don't add duplicate station name.
 					if polling_station_name_slug not in polling_station_slugs_grouped_by_commune_slug[commune_slug]:
 
