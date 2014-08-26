@@ -173,13 +173,13 @@ def register_url_rules_observations(app):
 	:param app: The application instance.
 	'''
 	# Get observations for a specified commune.
-	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=CommuneObservation.as_view('commune'))
+	app.add_url_rule('/kdi/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>', view_func=CommuneObservation.as_view('commune_observations'))
 
 	# Get observations for a specified commune and polling station.
-	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', view_func=PollingStationObservation.as_view('polling_station'))
+	app.add_url_rule('/kdi/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>', view_func=PollingStationObservation.as_view('polling_station_observations'))
 
 	# Get observations for a specified commune, polling station, and polling station room.
-	app.add_url_rule('/kdi/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:polling_station_room>', view_func=RoomObservation.as_view('room'))
+	app.add_url_rule('/kdi/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>/<string:polling_station_room>', view_func=RoomObservation.as_view('room_observations'))
 
 def register_url_rules_kvv_members_gender_distribution(app):
 	''' Register URL rules for KVV members gender distribution.
