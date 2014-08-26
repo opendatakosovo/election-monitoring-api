@@ -38,7 +38,83 @@
 
 <p>
 	The directory structure of the GET requests typically follow the following pattern:<br/>
-	http://opendatakosovo.org/apis/election-monitoring/<font>&lt;monitoring-organization&gt;</font>/<font>&lt;data-identifier&gt;</font>/<font>&lt;election-year&gt;</font>/<font>&lt;election-type&gt;</font>/<font>&lt;election-round&gt;</font>/<font>&lt;commune-name&gt;</font>/<font>&lt;polling-station-name&gt;</font>
+	http://opendatakosovo.org/api/election-monitoring/<font>&lt;monitoring-organization&gt;</font>/<font>&lt;data-identifier&gt;</font>/<font>&lt;election-year&gt;</font>/<font>&lt;election-type&gt;</font>/<font>&lt;election-round&gt;</font>/<font>&lt;commune-slug&gt;</font>/<font>&lt;polling-station-slug&gt;</font>/<font>&lt;room-number&gt;</font>
+</p>
+
+<br/>
+
+<p>
+	<table class="table table-striped table-bordered table-condensed">
+		<thead>
+		<tr>
+		  <th>Directory</th>
+		  <th>Value</th> 
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td><strong>monitoring-organization</strong></td>
+			<td>
+				A string identifying which organization we want to access data from.
+				The options are:<br/>
+				<ul>
+					<li>kdi &#8211; Kosova Democratic Institute</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>data-identifier</strong></td>
+			<td>
+				The type of data we want to retrive.<br/>
+				For KDI, the options are:<br/>
+				<ul>
+					<li>polling-stations &#8211; Polling station data.</li>
+					<li>observations &#8211; Observation data.</li>
+					<li>kvv-members-gender-distribution &#8211; KVV members gender distribution data.</li>
+					<li>votes-count &#8211; Cast ballot count at pre-determined hours.</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>election-year</strong></td>
+			<td>A four digit value representing the election year. e.g. '2014'.</td>
+		</tr>
+		<tr>
+			<td><strong>election-type</strong></td>
+			<td>
+				The election type.<br/>
+				The options are:<br/>
+				<ul>
+					<li>local-elections &#8211; Local elections.</li>
+					<li>general-elections &#8211; General elections.</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>election-round</strong></td>
+			<td>
+				The election round.<br/>
+				The options are:<br/>
+				<ul>
+					<li>first-round &#8211; First round of elections.</li>
+					<li>second-round &#8211; Second round of elections.</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>cummune-slug</strong></td>
+			<td>A slug representation of the commune name. e.g. 'fushe-kosova'.</td>
+		</tr>
+		<tr>
+			<td><strong>polling-station-slug</strong></td>
+			<td>A slug representation of the polling station name. e.g. 'mihal-graneno'.</td>
+		</tr>
+		<tr>
+			<td><strong>room-number</strong></td>
+			<td>The number of a polling station room.</td>
+		</tr>
+		</tbody>
+	</table>
 </p>
 
 <br/>
