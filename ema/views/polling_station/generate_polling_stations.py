@@ -5,7 +5,10 @@ from ema import utils, mongo
 
 class PollingStationsGenerator(object):
 
-	def __init__(self,polling_stations):
+	def __init__(self):
+		pass
+	def get_polling_stations(self, polling_stations):
+
 		#FIXED: Extract method for the following logic and put it in a superclass.
 		self.polling_station_grouped_by_commune_dict = OrderedDict()
 		
@@ -42,7 +45,5 @@ class PollingStationsGenerator(object):
 						self.polling_station_grouped_by_commune_dict[commune_slug]['pollingStations'].append({'name':polling_station_name,'slug':polling_station_name_slug})
 					
 						polling_station_slugs_grouped_by_commune_slug[commune_slug].append(polling_station_name_slug)
-
-	def get_polling_stations(self):
-		polling_station_grouped_by_commune = self.polling_station_grouped_by_commune_dict
-		return polling_station_grouped_by_commune
+		
+		return self.polling_station_grouped_by_commune_dict

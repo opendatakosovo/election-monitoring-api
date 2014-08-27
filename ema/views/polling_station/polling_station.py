@@ -6,7 +6,7 @@ import pymongo
 from ema import utils, mongo
 from generate_polling_stations import PollingStationsGenerator
 
-class PollingStationPollingStation(View):
+class PollingStationPollingStation(View, PollingStationsGenerator):
 
 	methods = ['GET']
 
@@ -25,12 +25,9 @@ class PollingStationPollingStation(View):
 		# Create a empty OrderedDictionary
 		polling_station_grouped_by_commune_dict = OrderedDict()
 		
-		#Create the object of the PollingStationGeerator Class and pass the polling_stations cursor
-		generator = PollingStationsGenerator(polling_stations)
+		#Get the dictionary from get_polling_stations method of the PollingStationGeerator
+		polling_station_grouped_by_commune_dict = super(PollingStationPollingStation, self).get_polling_stations(polling_stations)
 
-		#Get the dictionary from get_polling_stations method of the c object of the PollingStationGeerator
-		polling_station_grouped_by_commune_dict = generator.get_polling_stations()
-		
 		# Build response object				
 		resp = Response(response=json_util.dumps(polling_station_grouped_by_commune_dict), mimetype='application/json')
 
