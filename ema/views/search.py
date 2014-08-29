@@ -20,51 +20,16 @@ class Search(View):
 		# Build the query into a dictionary
 		query_dict = []
 
-		# Request the 'commune' property from the GET Method.
-		if request.args.get('commune_select'):
-			# Append the query argument to the dictionary
-			query_dict.append({"pollingStation.communeSlug" : request.args.get('commune_select')})
-
-		# Request the 'name' property from the GET Method.
-		if request.args.get('polling_station_select'):
-			# Append the query argument to the dictionary
-			query_dict.append({"pollingStation.nameSlug" : request.args.get('polling_station_select')})
-
-		# Request the 'ultraVioletControl' property from the GET Method.
-		if request.args.get('ultra_violet_control_select'):
-			# Append the query argument to the dictionary
-			query_dict.append({"votingProcess.voters.ultraVioletControl" : request.args.get('ultra_violet_control_select')})
-
-		# Request the 'fingerSprayed' property from the GET Method.
-		if request.args.get('finger_sprayed_select'):
-			# Append the query argument to the dictionary
-			query_dict.append({"votingProcess.voters.fingerSprayed" : request.args.get('finger_sprayed_select')})
-
-		# Request the 'missing_voting_cabin' property from the GET Method.
-		if request.args.get('missing_voting_cabin') != 'None':
-			# Append the query argument to the dictionary
-			query_dict.append({"preparation.missingMaterial.votingCabin" : bool(request.args.get('missing_voting_cabin'))})
-
-		# Request the 'missing_ballot_box' property from the GET Method.
-		if request.args.get('missing_ballot_box')  != 'None':
-			# Append the query argument to the dictionary
-			query_dict.append({"preparation.missingMaterial.ballotBox" : bool(request.args.get('missing_ballot_box'))})
-
-		# Request the 'missing_ballots' property from the GET Method.
-		if request.args.get('missing_ballots')  != 'None':
-			# Append the query argument to the dictionary
-			query_dict.append({"preparation.missingMaterial.ballots" : bool(request.args.get('missing_ballots'))})
-
-		# Request the '' property from the GET Method.
-		if request.args.get('missing_voters_book')  != 'None':
-			# Append the query argument to the dictionary
-			query_dict.append({"preparation.missingMaterial.votersBook" : bool(request.args.get('missing_voters_book'))})
-
-		# Request the 'missing_uv_lamp' property from the GET Method.
-		if request.args.get('missing_uv_lamp')  != 'None':
-			# Append the query argument to the dictionary
-			query_dict.append({"preparation.missingMaterial.uvLamp" : bool(request.args.get('missing_uv_lamp'))})
-
+		# Add query conditions to the query dictionary.
+		self.add_query_condition(query_dict, "pollingStation.communeSlug", 'commune')
+		self.add_query_condition(query_dict, "pollingStation.nameSlug", 'polling-station')		
+		self.add_query_condition(query_dict, "votingProcess.voters.ultraVioletControl", 'ultra-violet-control')
+		self.add_query_condition(query_dict, "votingProcess.voters.fingerSprayed", 'finger-sprayed')
+		self.add_query_condition(query_dict, "preparation.missingMaterial.votingCabin", 'missing-voting-cabin')
+		self.add_query_condition(query_dict, "preparation.missingMaterial.ballotBox",'missing-ballot-box')
+		self.add_query_condition(query_dict, "preparation.missingMaterial.ballots", 'missing-ballots')
+		self.add_query_condition(query_dict, "preparation.missingMaterial.votersBook", 'missing-voters-book')
+		self.add_query_condition(query_dict, "preparation.missingMaterial.uvLamp", 'missing-uv-lamp')
 
 		# Get the collection name.
 		collection_name = utils.get_collection_name(year, election_type, election_round)
@@ -86,3 +51,26 @@ class Search(View):
 
 		# Return JSON response.
 		return resp
+
+	def add_query_condition(self, query_dict, query_dict_key, query_string_key):
+		''' add a query condition to the give query dictionary.
+		'''
+		# Get the query string param value from the request for the given query string param key
+		value = request.args.get(query_string_key)
+
+		# Append the query argument to the dictionary
+		if value != '':
+			if value == 'None' or value == 'true':
+				value = self.get_boolean_from_checkbox_value(value)
+		
+			query_dict.append({query_dict_key : value})
+	
+
+	def get_boolean_from_checkbox_value(self, val):
+		''' Converts a checkbox form value into a boolean.
+		:param val: The value submitted by the checkbox.
+		'''
+		if val != 'None':
+			return bool(val)
+		else:
+			return False
