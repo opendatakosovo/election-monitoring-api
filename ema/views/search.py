@@ -22,7 +22,7 @@ class Search(View):
 
 		# Add query conditions to the query dictionary.
 		self.add_query_condition(query_dict, "pollingStation.commune.slug", 'commune')
-		self.add_query_condition(query_dict, "pollingStation.name.slug", 'polling-station')		
+		self.add_query_condition(query_dict, "pollingStation.slug", 'polling-station')		
 		self.add_query_condition(query_dict, "votingProcess.voters.ultraVioletControl", 'ultra-violet-control')
 		self.add_query_condition(query_dict, "votingProcess.voters.fingerSprayed", 'finger-sprayed')
 		self.add_query_condition(query_dict, "preparation.missingMaterials.votingBooth", 'missing-voting-booth')
@@ -35,14 +35,14 @@ class Search(View):
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 
 		# Build query object depending on given filter arguments
-		query = {'pollingStation.name.slug': {'$nin': ['', 'n-a']}}
+		query = {'pollingStation.slug': {'$nin': ['', 'n-a']}}
 		if len(query_dict) > 0:
 			query['$and'] = query_dict
 
 		# Execute query.
 		search_results = mongo.db[collection_name].find(query).sort([
 			("pollingStation.commune.slug", pymongo.ASCENDING),
-			("pollingStation.name.slug", pymongo.ASCENDING),
+			("pollingStation.slug", pymongo.ASCENDING),
 			("pollingStation.room", pymongo.ASCENDING)
 		])
 

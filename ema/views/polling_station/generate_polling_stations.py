@@ -24,8 +24,8 @@ class PollingStationsGenerator(object):
 
 			commune_slug = polling_station['pollingStation']['commune']['slug']
 			commune_name = polling_station['pollingStation']['commune']['name']
-			polling_station_name = polling_station['pollingStation']['name']['value']
-			polling_station_name_slug = polling_station['pollingStation']['name']['slug']
+			polling_station_name = polling_station['pollingStation']['name']
+			polling_station_name_slug = polling_station['pollingStation']['slug']
 		
 			# If first time we stumble on commune, create a dictionary entry for it.
 			if commune_slug not in self.polling_station_grouped_by_commune_dict:

@@ -16,9 +16,9 @@ class PollingStationPollingStation(View, PollingStationsGenerator):
 
 		polling_stations = mongo.db[collection_name].find({
 			"pollingStation.commune.slug": commune_slug, 
-			"pollingStation.name.slug": polling_station_slug
+			"pollingStation.slug": polling_station_slug
 		}).sort([
-			("pollingStation.name.slug", pymongo.ASCENDING),
+			("pollingStation.slug", pymongo.ASCENDING),
 			("pollingStation.room", pymongo.ASCENDING)
 		])
 		

@@ -16,7 +16,7 @@ class PollingStation(View, PollingStationsGenerator):
 
 		polling_stations = mongo.db[collection_name].find().sort([
 			("pollingStation.commune.slug", pymongo.ASCENDING),
-			("pollingStation.name.slug", pymongo.ASCENDING), 
+			("pollingStation.slug", pymongo.ASCENDING), 
 			("pollingStation.room", pymongo.ASCENDING)])
 
 		# Create a empty OrderedDictionary

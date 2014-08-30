@@ -25,7 +25,7 @@ class CommuneVoteCount(View):
 					{ "pollingStation.commune.slug": commune_name } 
 				},
 				{'$group':
-					{'_id':'$pollingStation.communeSlug',
+					{'_id':'$pollingStation.commune.slug',
 						'tenAM':{
 							'$sum':'$votingProcess.voters.howManyVotedBy.tenAM'
 						},
