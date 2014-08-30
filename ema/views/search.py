@@ -21,29 +21,29 @@ class Search(View):
 		query_dict = []
 
 		# Add query conditions to the query dictionary.
-		self.add_query_condition(query_dict, "pollingStation.communeSlug", 'commune')
-		self.add_query_condition(query_dict, "pollingStation.nameSlug", 'polling-station')		
+		self.add_query_condition(query_dict, "pollingStation.commune.slug", 'commune')
+		self.add_query_condition(query_dict, "pollingStation.name.slug", 'polling-station')		
 		self.add_query_condition(query_dict, "votingProcess.voters.ultraVioletControl", 'ultra-violet-control')
 		self.add_query_condition(query_dict, "votingProcess.voters.fingerSprayed", 'finger-sprayed')
-		self.add_query_condition(query_dict, "preparation.missingMaterial.votingCabin", 'missing-voting-cabin')
-		self.add_query_condition(query_dict, "preparation.missingMaterial.ballotBox",'missing-ballot-box')
-		self.add_query_condition(query_dict, "preparation.missingMaterial.ballots", 'missing-ballots')
-		self.add_query_condition(query_dict, "preparation.missingMaterial.votersBook", 'missing-voters-book')
-		self.add_query_condition(query_dict, "preparation.missingMaterial.uvLamp", 'missing-uv-lamp')
+		self.add_query_condition(query_dict, "preparation.missingMaterials.votingBooth", 'missing-voting-booth')
+		self.add_query_condition(query_dict, "preparation.missingMaterials.ballotBox",'missing-ballot-box')
+		self.add_query_condition(query_dict, "preparation.missingMaterials.ballots", 'missing-ballots')
+		self.add_query_condition(query_dict, "preparation.missingMaterials.pollBook", 'missing-poll-book')
+		self.add_query_condition(query_dict, "preparation.missingMaterials.uvLamp", 'missing-uv-lamp')
 
 		# Get the collection name.
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 
 		# Build query object depending on given filter arguments
-		query = {}
+		query = {'pollingStation.name.slug': {'$ne': ''}}
 		if len(query_dict) > 0:
-			query = {"$and" : query_dict}
+			query = {'pollingStation.name.slug': {'$ne': ''}, '$and' : query_dict}
 
 		# Execute query.
 		search_results = mongo.db[collection_name].find(query).sort([
-			("pollingStation.communeSlug", pymongo.ASCENDING),
-			("pollingStation.nameSlug", pymongo.ASCENDING),
-			("pollingStation.roomNumber", pymongo.ASCENDING)
+			("pollingStation.commune.slug", pymongo.ASCENDING),
+			("pollingStation.name.slug", pymongo.ASCENDING),
+			("pollingStation.room", pymongo.ASCENDING)
 		])
 
 		# Build the JSON response

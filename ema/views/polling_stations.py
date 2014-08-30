@@ -14,7 +14,11 @@ class PollingStation(View):
 
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 
-		polling_stations = mongo.db[collection_name].find().sort([("pollingStation.communeSlug", pymongo.ASCENDING),("pollingStation.nameSlug", pymongo.ASCENDING), ("pollingStation.roomNumber", pymongo.ASCENDING)])
+		polling_stations = mongo.db[collection_name].find().sort([
+			("pollingStation.commune.slug", pymongo.ASCENDING),
+			("pollingStation.name.slug", pymongo.ASCENDING),
+			("pollingStation.room", pymongo.ASCENDING)
+		])
 
 		polling_station_grouped_by_commune_dict = OrderedDict()
 
@@ -24,16 +28,19 @@ class PollingStation(View):
 
 		for idx, polling_station in enumerate(polling_stations):
 
-		
-			commune_slug = polling_station['pollingStation']['communeSlug']
-			commune_name = polling_station['pollingStation']['commune']
-			polling_station_name = polling_station['pollingStation']['name']
-			polling_station_name_slug = polling_station['pollingStation']['nameSlug']
+			commune_slug = polling_station['pollingStation']['commune']['slug']
+			commune_name = polling_station['pollingStation']['commune']['name']
+
+			polling_station_name_slug = polling_station['pollingStation']['name']['slug']
+			polling_station_name = polling_station['pollingStation']['name']['value']
 		
 			# If first time we stumble on commune, create a dictionary entry for it.
 			if commune_slug not in polling_station_grouped_by_commune_dict:
 				polling_station_grouped_by_commune_dict[commune_slug] = {'name': commune_name, 'slug': commune_slug}
-				polling_station_grouped_by_commune_dict[commune_slug]['pollingStations'] = [{'name':polling_station_name, 'slug':polling_station_name_slug}]
+				polling_station_grouped_by_commune_dict[commune_slug]['pollingStations'] = [{
+					'name':polling_station_name,
+					'slug':polling_station_name_slug
+				}]
 
 				polling_station_slugs_grouped_by_commune_slug[commune_slug] = [polling_station_name_slug]
 
@@ -43,7 +50,10 @@ class PollingStation(View):
 					# Don't add duplicate station name.
 					if polling_station_name_slug not in polling_station_slugs_grouped_by_commune_slug[commune_slug]:
 
-						polling_station_grouped_by_commune_dict[commune_slug]['pollingStations'].append({'name':polling_station_name,'slug':polling_station_name_slug})
+						polling_station_grouped_by_commune_dict[commune_slug]['pollingStations'].append({
+							'name':polling_station_name,
+							'slug':polling_station_name_slug
+						})
 					
 						polling_station_slugs_grouped_by_commune_slug[commune_slug].append(polling_station_name_slug)
 		

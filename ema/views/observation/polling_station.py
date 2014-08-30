@@ -14,8 +14,8 @@ class PollingStationObservation(View):
 		:param year: The year of the election
 		:param election_type: The type of the election. Can be local (local-election) or general (general-election)
 		:param election_round: The round of the election (e.g. firt-round, second-round...)
-		:param commune_slug: The name of the commune.
-		:param polling_station_slug: The name of the polling station.
+		:param commune_slug: The slug of the commune.
+		:param polling_station_slug: The slug of the polling station.
 		'''
 		
 		# Get the name of the collection we must query on.
@@ -23,8 +23,8 @@ class PollingStationObservation(View):
 	
 		# Execute query.
 		observations = mongo.db[collection_name].find({
-			'pollingStation.communeSlug': commune_slug, 
-			'pollingStation.nameSlug': polling_station_slug
+			'pollingStation.commune.slug': commune_slug, 
+			'pollingStation.name.slug': polling_station_slug
 		})
 	
 		# Create JSON response object.

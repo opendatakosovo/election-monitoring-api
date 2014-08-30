@@ -22,7 +22,7 @@ class CommuneVoteCount(View):
 		# Execute query.
 		voted_by_observation = mongo.db[collection_name].aggregate([
 				{ "$match":
-					{ "pollingStation.communeSlug":commune_name } 
+					{ "pollingStation.commune.slug": commune_name } 
 				},
 				{'$group':
 					{'_id':'$pollingStation.communeSlug',

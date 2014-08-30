@@ -22,8 +22,9 @@ class PollingStationVoteCount(View):
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 		# Execute query.
 		voted_by_observation = mongo.db[collection_name].aggregate([
-				{ "$match":
-					{ "pollingStation.communeSlug":commune_name,  "pollingStation.nameSlug":polling_station_name}
+				{ "$match":{
+					"pollingStation.commune.slug": commune_name,
+					"pollingStation.name.slug": polling_station_name}
 				},
 				{'$group':
 					{'_id':'$pollingStation.communeSlug',

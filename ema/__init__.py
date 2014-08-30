@@ -158,14 +158,14 @@ def register_url_rules_polling_stations(app):
 	:param app: The application instance.
 	'''
 	# Get all polling station for a given election.
-	app.add_url_rule('/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>', view_func=PollingStation.as_view('polling_stations'))
+	app.add_url_rule('/dia/polling-stations/<int:year>/<string:election_type>/<string:election_round>', view_func=PollingStation.as_view('polling_stations'))
 
 	# Get polling station for a given commune.
-	app.add_url_rule('/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>', view_func=CommunePollingStation.as_view('commung_polling_stations'))
+	app.add_url_rule('/dia/polling-stations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>', view_func=CommunePollingStation.as_view('commung_polling_stations'))
 
 	# Get polling station for a given polling station. Silly, but sometimes we only have slug and want the value.
 	# Should implement a less hardcore way to get value for a slug.
-	app.add_url_rule('/kdi/polling-stations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>', view_func=PollingStationPollingStation.as_view('polling_station_polling_stations'))
+	app.add_url_rule('/dia/polling-stations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>', view_func=PollingStationPollingStation.as_view('polling_station_polling_stations'))
 
 
 def register_url_rules_observations(app):
@@ -173,13 +173,13 @@ def register_url_rules_observations(app):
 	:param app: The application instance.
 	'''
 	# Get observations for a specified commune.
-	app.add_url_rule('/kdi/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>', view_func=CommuneObservation.as_view('commune_observations'))
+	app.add_url_rule('/dia/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>', view_func=CommuneObservation.as_view('commune_observations'))
 
 	# Get observations for a specified commune and polling station.
-	app.add_url_rule('/kdi/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>', view_func=PollingStationObservation.as_view('polling_station_observations'))
+	app.add_url_rule('/dia/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>', view_func=PollingStationObservation.as_view('polling_station_observations'))
 
 	# Get observations for a specified commune, polling station, and polling station room.
-	app.add_url_rule('/kdi/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>/<string:polling_station_room>', view_func=RoomObservation.as_view('room_observations'))
+	app.add_url_rule('/dia/observations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>/<string:polling_station_room>', view_func=RoomObservation.as_view('room_observations'))
 
 def register_url_rules_kvv_members_gender_distribution(app):
 	''' Register URL rules for KVV members gender distribution.
@@ -187,13 +187,13 @@ def register_url_rules_kvv_members_gender_distribution(app):
 	'''
 
 	# Get KVV members gender distribution for a given commune.
-	app.add_url_rule('/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=KvvCommuneGenderDistribution.as_view('commune_gender_distribution'))
+	app.add_url_rule('/dia/psc-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=KvvCommuneGenderDistribution.as_view('commune_gender_distribution'))
 
 	# Get KVV members gender distribution for a given commune and polling station.
-	app.add_url_rule('/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', view_func=KvvPollingStationGenderDistribution.as_view('polling_station_gender_distribution'))
+	app.add_url_rule('/dia/psc-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', view_func=KvvPollingStationGenderDistribution.as_view('polling_station_gender_distribution'))
 
 	# Get KVV members gender distribution for a given commune, polling station, and polling station room number.
-	app.add_url_rule('/kdi/kvv-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', view_func=KvvRoomGenderDistribution.as_view('room_gender_distribution'))
+	app.add_url_rule('/dia/psc-members-gender-distribution/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', view_func=KvvRoomGenderDistribution.as_view('room_gender_distribution'))
 
 	
 def register_url_rules_hour_votes_count(app):
@@ -202,10 +202,10 @@ def register_url_rules_hour_votes_count(app):
 	'''
 	
 	# Get hour votes count for given commune.
-	app.add_url_rule('/kdi/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=CommuneVoteCount.as_view('commune_votes'))
+	app.add_url_rule('/dia/hour-vote-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>', view_func=CommuneVoteCount.as_view('commune_votes'))
 
 	# Get hour votes count for given commune and polling station.
-	app.add_url_rule('/kdi/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', view_func=PollingStationVoteCount.as_view('polling_station_votes'))
+	app.add_url_rule('/dia/hour-vote-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>', view_func=PollingStationVoteCount.as_view('polling_station_votes'))
 
 	# Get hour votes count for given commune, polling station, and room number.
-	app.add_url_rule('/kdi/votes-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', view_func=RoomVoteCount.as_view('room_votes'))
+	app.add_url_rule('/dia/hour-vote-count/<int:year>/<string:election_type>/<string:election_round>/<string:commune_name>/<string:polling_station_name>/<string:room_number>', view_func=RoomVoteCount.as_view('room_votes'))
