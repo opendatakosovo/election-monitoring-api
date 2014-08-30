@@ -35,9 +35,9 @@ class Search(View):
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 
 		# Build query object depending on given filter arguments
-		query = {'pollingStation.name.slug': {'$ne': ''}}
+		query = {'pollingStation.name.slug': {'$nin': ['', 'n-a']}}
 		if len(query_dict) > 0:
-			query = {'pollingStation.name.slug': {'$ne': ''}, '$and' : query_dict}
+			query['$and'] = query_dict
 
 		# Execute query.
 		search_results = mongo.db[collection_name].find(query).sort([
@@ -59,18 +59,11 @@ class Search(View):
 		value = request.args.get(query_string_key)
 
 		# Append the query argument to the dictionary
-		if value != '':
-			if value == 'None' or value == 'true':
-				value = self.get_boolean_from_checkbox_value(value)
-		
+		if value != '' and value != 'None':
+			if value == 'true':
+				value = True
+
 			query_dict.append({query_dict_key : value})
 	
 
-	def get_boolean_from_checkbox_value(self, val):
-		''' Converts a checkbox form value into a boolean.
-		:param val: The value submitted by the checkbox.
-		'''
-		if val != 'None':
-			return bool(val)
-		else:
-			return False
+
