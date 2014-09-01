@@ -58,7 +58,7 @@ def load_config(app):
 
 	# Set up config properties
 	app.config['SERVER_PORT'] = config.get('Application', 'SERVER_PORT')
-	app.config['BASE_PATH'] = config.get('Mongo', 'BASE_PATH')
+	app.config['BASE_PATH'] = config.get('Application', 'BASE_PATH')
 
 	app.config['MONGO_DBNAME'] = config.get('Mongo', 'DB_NAME')
 
