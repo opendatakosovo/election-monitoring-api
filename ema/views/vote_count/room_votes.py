@@ -25,23 +25,23 @@ class RoomVoteCount(View):
 		# Execute query.
 		voted_by_observation = mongo.db[collection_name].aggregate([
 				{ "$match":{
-					"pollingStation.commune.slug": commune_name,
-					"pollingStation.slug": polling_station_name,
-					"pollingStation.room": room_number } 
+					"votingCenter.commune.slug": commune_name,
+					"votingCenter.slug": polling_station_name,
+					"votingCenter.stationNumber": room_number } 
 				},
 				{'$group':
-					{'_id':'$pollingStation.room',
+					{'_id':'$votingCenter.stationNumber',
 						'tenAM':{
-							'$sum':'$votingProcess.voters.howManyVotedBy.tenAM'
+							'$sum':'$voting.process.voters.howManyVotedBy.tenAM'
 						},
 						'onePM':{
-							'$sum':'$votingProcess.voters.howManyVotedBy.onePM'
+							'$sum':'$voting.process.voters.howManyVotedBy.onePM'
 						},
 						'fourPM':{
-							'$sum':'$votingProcess.voters.howManyVotedBy.fourPM'
+							'$sum':'$voting.process.voters.howManyVotedBy.fourPM'
 						},
 						'sevenPM':{
-							'$sum':'$votingProcess.voters.howManyVotedBy.sevenPM'
+							'$sum':'$voting.process.voters.howManyVotedBy.sevenPM'
 						}
 					}
 				}

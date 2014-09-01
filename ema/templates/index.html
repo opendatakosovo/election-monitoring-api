@@ -16,8 +16,7 @@
 
 <h3>Data<hr/></h3>
 <p>
-	Currently, Kosova Democratic Institute (KDI)'s observations on Kosovo's 2013 local elections can be accessed with this API.<br/>
-	KDI's observations of the 2014 general elections will soon be made available.
+	Currently, you can use this API to access Kosovo's 2013 local and 2014 general elections observations collected by <a href="http://www.demokracianeveprim.org/en/">Democracy in Action</a> (DiA).
 </p>
 
 <br/>
@@ -38,7 +37,7 @@
 
 <p>
 	The directory structure of the GET requests typically follow the following pattern:<br/>
-	http://opendatakosovo.org/api/election-monitoring/<font>&lt;monitoring-organization&gt;</font>/<font>&lt;data-identifier&gt;</font>/<font>&lt;election-year&gt;</font>/<font>&lt;election-type&gt;</font>/<font>&lt;election-round&gt;</font>/<font>&lt;commune-slug&gt;</font>/<font>&lt;polling-station-slug&gt;</font>/<font>&lt;room-number&gt;</font>
+	http://opendatakosovo.org/api/election-monitoring/<font>&lt;monitoring-organization&gt;</font>/<font>&lt;data-identifier&gt;</font>/<font>&lt;election-year&gt;</font>/<font>&lt;election-type&gt;</font>/<font>&lt;election-round&gt;</font>/<font>&lt;commune-slug&gt;</font>/<font>&lt;voting-center-slug&gt;</font>/<font>&lt;station-number&gt;</font>
 </p>
 
 <br>
@@ -58,7 +57,7 @@
 				A string identifying which organization we want to access data from.
 				The options are:<br/>
 				<ul>
-					<li>kdi &#8211; Kosova Democratic Institute</li>
+					<li>dia &#8211; Democracy in Action</li>
 				</ul>
 			</td>
 		</tr>
@@ -66,12 +65,12 @@
 			<td><strong>data-identifier</strong></td>
 			<td>
 				The type of data we want to retrive.<br/>
-				For KDI, the options are:<br/>
+				For DiA, the options are:<br/>
 				<ul>
-					<li>polling-stations &#8211; Polling station data.</li>
+					<li>voting-centers &#8211; voting center data.</li>
 					<li>observations &#8211; Observation data.</li>
-					<li>kvv-members-gender-distribution &#8211; KVV members gender distribution data.</li>
-					<li>votes-count &#8211; Cast ballot count at pre-determined hours.</li>
+					<li>psc-members-gender-distribution &#8211; PSC members gender distribution data.</li>
+					<li>hour-vote-count &#8211; Cast ballot count at pre-determined hours.</li>
 				</ul>
 			</td>
 		</tr>
@@ -107,11 +106,11 @@
 		</tr>
 		<tr>
 			<td><strong>polling-station-slug</strong></td>
-			<td>A slug representation of the polling station name. e.g. 'mihal-graneno'.</td>
+			<td>A slug representation of the voting station name. e.g. 'mihal-graneno'.</td>
 		</tr>
 		<tr>
-			<td><strong>room-number</strong></td>
-			<td>The number of a polling station room.</td>
+			<td><strong>station-number</strong></td>
+			<td>The station number of the voting center.</td>
 		</tr>
 		</tbody>
 	</table>
@@ -119,10 +118,10 @@
 
 <br>
 
-<h3>Searching the KDI dataset</h3>
+<h3>Searching the DiA's dataset</h3>
 <p>
 	The directory structure of the GET requests follows the following pattern:<br/>
-	http://opendatakosovo.org/api/election-monitoring/<font>&lt;monitoring-organization&gt;</font>/search/<font>&lt;election-year&gt;</font>/<font>&lt;election-type&gt;</font>/<font>[election-round]</font>/?<font>&lt;searc_param_key&gt;=[searc_param_key]</font>
+	http://opendatakosovo.org/api/election-monitoring/<font>&lt;monitoring-organization&gt;</font>/search/<font>&lt;election-year&gt;</font>/<font>&lt;election-type&gt;</font>/<font>&lt;election-round&gt;</font>/?<font>&lt;searc_param_key&gt;=&lt;searc_param_value&gt;</font>
 </p>
 
 <p>
@@ -146,11 +145,11 @@
 			<td>A slug representation of the commune name. e.g. 'fushe-kosova'.</td>
 		</tr>
 		<tr>
-			<td><strong>polling_station</strong></td>
-			<td>A slug representation of the polling station name. e.g. 'mihal-graneno'.</td>
+			<td><strong>voting-center</strong></td>
+			<td>A slug representation of the voting center name. e.g. 'mihal-graneno'.</td>
 		</tr>
 		<tr>
-			<td><strong>ultra_violet_control</strong></td>
+			<td><strong>ultra-violet-control</strong></td>
 			<td>
 				How frequent were voters controlled with utra violet.<br/>
 				The options are:<br/>
@@ -163,7 +162,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><strong>finger_sprayed</strong></td>
+			<td><strong>finger-sprayed</strong></td>
 			<td>
 				How frequent were voters' fingers sprayed.<br/>
 				The options are:<br/>
@@ -176,7 +175,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><strong>missing_voting_cabin</strong></td>
+			<td><strong>missing-voting-booth</strong></td>
 			<td>
 				Indicate whether voting cabins were missing.<br/>
 				The options are:<br/>
@@ -187,7 +186,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><strong>missing_ballot_box</strong></td>
+			<td><strong>missing-ballot-box</strong></td>
 			<td>
 				Indicate whether ballot boxes were missing.<br/>
 				The options are:<br/>
@@ -198,7 +197,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><strong>missing_ballots</strong></td>
+			<td><strong>missing-ballots</strong></td>
 			<td>
 				Indicate whether ballots were missing.<br/>
 				The options are:<br/>
@@ -209,9 +208,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td><strong>missing_uv_lamp</strong></td>
+			<td><strong>missing-poll-book</strong></td>
 			<td>
-				Indicate whether UV Lamps were missing.<br/>
+				Indicate whether poll books were missing.<br/>
 				The options are:<br/>
 				<ul>
 					<li>true</li>
@@ -220,18 +219,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><strong>missing_voters_book</strong></td>
-			<td>
-				Indicate whether voter books were missing.<br/>
-				The options are:<br/>
-				<ul>
-					<li>true</li>
-					<li>false</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<td><strong>missing_uv_lamp</strong></td>
+			<td><strong>missing-uv-lamp</strong></td>
 			<td>
 				Indicate whether UV lamps were missing.<br/>
 				The options are:<br/>
@@ -248,74 +236,73 @@
 <br/>
 
 <h3>Sample Requests<hr/></h3>
-<h4>Getting data collected by KDI</h4>
+<h4>Getting data collected by DiA</h4>
 
 <p>
 	<strong>Get polling stations grouped by commune:</strong></br>
-	<a href="/api/election-monitoring/kdi/polling-stations/2013/local-elections/first-round">http://opendatakosovo.org/api/election-monitoring/kdi/polling-stations/2013/local-elections/first-round</a>
+	<a href="{{ config.BASE_PATH }}/dia/voting-centers/2013/local-elections/first-round">{{ config.BASE_PATH }}/dia/voting-centers/2013/local-elections/first-round</a>
 </p>
 
 <p>
 	<strong>Get observations for a given commune:</strong></br>
-	<a href="/api/election-monitoring/kdi/observations/2013/local-elections/first-round/ferizaj">http://opendatakosovo.org/api/election-monitoring/kdi/observations/2013/local-elections/first-round/ferizaj</a>
+	<a href="{{ config.BASE_PATH }}/dia/observations/2013/local-elections/first-round/ferizaj">{{ config.BASE_PATH }}/dia/observations/2013/local-elections/first-round/ferizaj</a>
 </p>
 
 <p>
 	<strong>Get observations for a given commune and polling station:</strong></br>
-	<a href="/api/election-monitoring/kdi/observations/2013/local-elections/first-round/ferizaj/zaskok">http://opendatakosovo.org/api/election-monitoring/kdi/observations/2013/local-elections/first-round/ferizaj/zaskok</a>
+	<a href="{{ config.BASE_PATH }}/dia/observations/2013/local-elections/first-round/ferizaj/zaskok">{{ config.BASE_PATH }}/dia/observations/2013/local-elections/first-round/ferizaj/zaskok</a>
 </p>
 
 <p>
 	<strong>Get observations for a given commune, polling station, and room number:</strong></br>
-	<a href="/api/election-monitoring/kdi/observations/2013/local-elections/first-round/ferizaj/zaskok/03d">http://opendatakosovo.org/api/election-monitoring/kdi/observations/2013/local-elections/first-round/ferizaj/zaskok/03d</a>
+	<a href="{{ config.BASE_PATH }}/dia/observations/2013/local-elections/first-round/ferizaj/zaskok/03D">{{ config.BASE_PATH }}/dia/observations/2013/local-elections/first-round/ferizaj/zaskok/03D</a>
 </p>
 
 <p>
 	<strong>Get KVV members gender distribtion for a given commune:</strong></br>
-	<a href="/api/election-monitoring/kdi/kvv-members-gender-distribution/2013/local-elections/first-round/ferizaj">http://opendatakosovo.org/api/election-monitoring/kdi/kvv-members-gender-distribution/2013/local-elections/first-round/ferizaj</a>
+	<a href="{{ config.BASE_PATH }}/dia/psc-members-gender-distribution/2013/local-elections/first-round/ferizaj">{{ config.BASE_PATH }}/dia/psc-members-gender-distribution/2013/local-elections/first-round/ferizaj</a>
 </p>
 
 <p>
 	<strong>Get KVV members gender distribtion for a given commune and polling station:</strong></br>
-	<a href="/api/election-monitoring/kdi/kvv-members-gender-distribution/2013/local-elections/first-round/ferizaj/zaskok">http://opendatakosovo.org/api/election-monitoring/kdi/kvv-members-gender-distribution/2013/local-elections/first-round/ferizaj/zaskok</a>
+	<a href="{{ config.BASE_PATH }}/dia/psc-members-gender-distribution/2013/local-elections/first-round/ferizaj/zaskok">{{ config.BASE_PATH }}/dia/psc-members-gender-distribution/2013/local-elections/first-round/ferizaj/zaskok</a>
 </p>
 
 <p>
 	<strong>Get KVV members gender distribtion for a given commune, polling station, and room number:</strong></br>
-	<a href="/api/election-monitoring/kdi/kvv-members-gender-distribution/2013/local-elections/first-round/ferizaj/zaskok/03d">http://opendatakosovo.org/api/election-monitoring/kdi/kvv-members-gender-distribution/2013/local-elections/first-round/ferizaj/zaskok/03d</a>
+	<a href="{{ config.BASE_PATH }}/dia/psc-members-gender-distribution/2013/local-elections/first-round/ferizaj/zaskok/03D">{{ config.BASE_PATH }}/dia/psc-members-gender-distribution/2013/local-elections/first-round/ferizaj/zaskok/03D</a>
 </p>
 
 <p>
 	<strong>Get votes count for given commune:</strong></br>
-	<a href="/api/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj">http://opendatakosovo.org/api/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj</a>
+	<a href="{{ config.BASE_PATH }}/dia/hour-vote-count/2013/local-elections/first-round/ferizaj">{{ config.BASE_PATH }}/dia/hour-vote-count/2013/local-elections/first-round/ferizaj</a>
 </p>
 
 <p>
 	<strong>Get votes count for given commune and polling station:</strong></br>
-	<a href="/api/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj/zaskok">http://opendatakosovo.org/api/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj/zaskok</a>
+	<a href="{{ config.BASE_PATH }}/dia/hour-vote-count/2013/local-elections/first-round/ferizaj/zaskok">{{ config.BASE_PATH }}/dia/hour-vote-count/2013/local-elections/first-round/ferizaj/zaskok</a>
 </p>
 
 <p>
 	<strong>Get votes count for given commune, polling station, and room number:</strong></br>
-	<a href="/api/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj/zaskok/03d">http://opendatakosovo.org/api/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj/zaskok/03d</a>
+	<a href="{{ config.BASE_PATH }}/dia/hour-vote-count/2013/local-elections/first-round/ferizaj/zaskok/03D">{{ config.BASE_PATH }}/dia/hour-vote-count/2013/local-elections/first-round/ferizaj/zaskok/03D</a>
 </p>
 
-<h4>Searching data collected by KDI</h4>
+<br><br>
+<h4>Searching data collected by DiA</h4>
 <p>
-	<strong>Get observations collected from the "11 Marsi" polling station in Prizren:</strong></br>
-	<a href="/api/election-monitoring/kdi/search/2013/local-elections/first-round/?commune=prizren&polling-station=11-marsi">http://opendatakosovo.org/api/election-monitoring/kdi/search/2013/local-elections/first-round/?commune=prizren&polling-station=11-marsi</a>
-</p>
-
-<p>
-	<strong>Get observations collected from the "11 Marsi" polling station in Prizren where UV lamps and ballots boxes were missing:</strong>
-	
-	<a href="/api/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj/zaskok/03d">http://opendatakosovo.org/api/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj/zaskok/03d</a>
+	<strong>Get observations collected from the "11 Marsi" voting center in Prizren:</strong></br>
+	<a href="{{ config.BASE_PATH }}/dia/search/2013/local-elections/first-round/?commune=prizren&voting-center=11-marsi">{{ config.BASE_PATH }}/dia/search/2013/local-elections/first-round/?commune=prizren&voting-center=11-marsi</a>
 </p>
 
 <p>
-	<strong>Get observations collected from the "11 Marsi" polling station in Prizren where voters' fingers where never spray and UV lamps were missing:</strong>
-	
-	<a href="/api/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj/zaskok/03d">http://opendatakosovo.org/api/election-monitoring/kdi/votes-count/2013/local-elections/first-round/ferizaj/zaskok/03d</a>
+	<strong>Get observations collected from the "11 Marsi" voting center in Prizren where UV lamps and ballots boxes were missing:</strong></br>
+	<a href="{{ config.BASE_PATH }}/dia/search/2013/local-elections/first-round/?commune=prizren&voting-center=11-marsi&missing-uv-lamp=true&missing-ballot-box=true">{{ config.BASE_PATH }}/dia/search/2013/local-elections/first-round/?commune=prizren&voting-center=11-marsi&missing-uv-lamp=true&missing-ballot-box=true</a>
+</p>
+
+<p>
+	<strong>Get observations collected from the "11 Marsi" voting center in Prizren where voters' fingers where always sprayed and UV lamps were missing:</strong></br>
+	<a href="{{ config.BASE_PATH }}/dia/search/2013/local-elections/first-round/?commune=prizren&voting-center=11-marsi&finger-sprayed=always&missing-uv-lamp=true">{{ config.BASE_PATH }}/dia/search/2013/local-elections/first-round/?commune=prizren&voting-center=11-marsi&finger-sprayed=never&missing-uv-lamp=true</a>
 </p>
 
 

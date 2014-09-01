@@ -158,14 +158,14 @@ def register_url_rules_polling_stations(app):
 	:param app: The application instance.
 	'''
 	# Get all polling station for a given election.
-	app.add_url_rule('/dia/polling-stations/<int:year>/<string:election_type>/<string:election_round>', view_func=PollingStation.as_view('polling_stations'))
+	app.add_url_rule('/dia/voting-centers/<int:year>/<string:election_type>/<string:election_round>', view_func=PollingStation.as_view('polling_stations'))
 
 	# Get polling station for a given commune.
-	app.add_url_rule('/dia/polling-stations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>', view_func=CommunePollingStation.as_view('commung_polling_stations'))
+	app.add_url_rule('/dia/voting-centers/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>', view_func=CommunePollingStation.as_view('commung_polling_stations'))
 
 	# Get polling station for a given polling station. Silly, but sometimes we only have slug and want the value.
 	# Should implement a less hardcore way to get value for a slug.
-	app.add_url_rule('/dia/polling-stations/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>', view_func=PollingStationPollingStation.as_view('polling_station_polling_stations'))
+	app.add_url_rule('/dia/voting-centers/<int:year>/<string:election_type>/<string:election_round>/<string:commune_slug>/<string:polling_station_slug>', view_func=PollingStationPollingStation.as_view('polling_station_polling_stations'))
 
 
 def register_url_rules_observations(app):

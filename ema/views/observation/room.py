@@ -24,9 +24,9 @@ class RoomObservation(View):
 	
 		# Execute query.
 		observations = mongo.db[collection_name].find({
-			'pollingStation.commune.slug': commune_slug,
-			'pollingStation.slug': polling_station_slug,
-			'pollingStation.room': polling_station_room
+			'votingCenter.commune.slug': commune_slug,
+			'votingCenter.slug': polling_station_slug,
+			'votingCenter.stationNumber': polling_station_room
 		})
 	
 		# Create JSON response object.

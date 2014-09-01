@@ -22,7 +22,7 @@ class CommuneObservation(View):
 	
 		# Execute query.
 		observations = mongo.db[collection_name].find({
-			'pollingStation.commune.slug': commune_slug
+			'votingCenter.commune.slug': commune_slug
 		})
 	
 		# Create JSON response object.

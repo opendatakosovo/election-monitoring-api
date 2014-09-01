@@ -21,10 +21,10 @@ class Search(View):
 		query_dict = []
 
 		# Add query conditions to the query dictionary.
-		self.add_query_condition(query_dict, "pollingStation.commune.slug", 'commune')
-		self.add_query_condition(query_dict, "pollingStation.slug", 'polling-station')		
-		self.add_query_condition(query_dict, "votingProcess.voters.ultraVioletControl", 'ultra-violet-control')
-		self.add_query_condition(query_dict, "votingProcess.voters.fingerSprayed", 'finger-sprayed')
+		self.add_query_condition(query_dict, "votingCenter.commune.slug", 'commune')
+		self.add_query_condition(query_dict, "votingCenter.slug", 'voting-center')		
+		self.add_query_condition(query_dict, "voting.process.voters.ultraVioletControl", 'ultra-violet-control')
+		self.add_query_condition(query_dict, "voting.process.voters.fingerSprayed", 'finger-sprayed')
 		self.add_query_condition(query_dict, "preparation.missingMaterials.votingBooth", 'missing-voting-booth')
 		self.add_query_condition(query_dict, "preparation.missingMaterials.ballotBox",'missing-ballot-box')
 		self.add_query_condition(query_dict, "preparation.missingMaterials.ballots", 'missing-ballots')
@@ -35,15 +35,15 @@ class Search(View):
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 
 		# Build query object depending on given filter arguments
-		query = {'pollingStation.slug': {'$nin': ['', 'n-a']}}
+		query = {'votingCenter.slug': {'$nin': ['', 'n-a']}}
 		if len(query_dict) > 0:
 			query['$and'] = query_dict
 
 		# Execute query.
 		search_results = mongo.db[collection_name].find(query).sort([
-			("pollingStation.commune.slug", pymongo.ASCENDING),
-			("pollingStation.slug", pymongo.ASCENDING),
-			("pollingStation.room", pymongo.ASCENDING)
+			("votingCenter.commune.slug", pymongo.ASCENDING),
+			("votingCenter.slug", pymongo.ASCENDING),
+			("votingCenter.stationNumber", pymongo.ASCENDING)
 		])
 
 		# Build the JSON response
@@ -59,9 +59,11 @@ class Search(View):
 		value = request.args.get(query_string_key)
 
 		# Append the query argument to the dictionary
-		if value != '' and value != 'None':
+		if value != None and value != '' and value != 'None':
 			if value == 'true':
 				value = True
+			elif value == 'false':
+				value = False
 
 			query_dict.append({query_dict_key : value})
 	

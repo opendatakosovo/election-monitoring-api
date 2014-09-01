@@ -25,16 +25,16 @@ class KvvRoomGenderDistribution(View):
 		# Execute query.
 		gender_observation = mongo.db[collection_name].aggregate([
 			{ "$match": {
-				"pollingStation.commune.slug":commune_name,
-				"pollingStation.slug":polling_station_name,
-				"pollingStation.room": room_number}
+				"votingCenter.commune.slug":commune_name,
+				"votingCenter.slug":polling_station_name,
+				"votingCenter.stationNumber": room_number}
 			}, 
 			{'$group': {
-				'_id':'$pollingStation.room.slug',
+				'_id':'$votingCenter.stationNumber',
 				'total': {
 					'$sum':'$preparation.pscMembers.total'},
 				'totalFemale':{
-					'$sum':'$preparation.pscMembers.female'}
+					'$sum':'$preparation.pscMembers.women'}
 				}
 			}
 		])

@@ -15,10 +15,10 @@ class CommunePollingStation(View, PollingStationsGenerator):
 		collection_name = utils.get_collection_name(year, election_type, election_round)
 
 		polling_stations = mongo.db[collection_name].find({
-			"pollingStation.commune.slug": commune_slug}
+			"votingCenter.commune.slug": commune_slug}
 		).sort([
-			("pollingStation.slug", pymongo.ASCENDING),
-			("pollingStation.room", pymongo.ASCENDING)
+			("votingCenter.slug", pymongo.ASCENDING),
+			("votingCenter.stationNumber", pymongo.ASCENDING)
 		])
 		
 		# Create a empty OrderedDictionary
