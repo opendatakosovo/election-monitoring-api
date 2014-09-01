@@ -30,7 +30,7 @@ class KvvPollingStationGenderDistribution(View):
 				'_id':'$votingCenter.slug',
 				'total': {
 					'$sum':'$preparation.pscMembers.total'},
-				'totalFemale':{
+				'totalWomen':{
 					'$sum':'$preparation.pscMembers.women'}
 				}
 			}

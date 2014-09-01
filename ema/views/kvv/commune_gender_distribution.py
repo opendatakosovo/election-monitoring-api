@@ -29,7 +29,7 @@ class KvvCommuneGenderDistribution(View):
 				'_id':'$votingCenter.commune.slug',
 				'total': {
 					'$sum':'$preparation.pscMembers.total'},
-				'totalFemale':{
+				'totalWomen':{
 					'$sum':'$preparation.pscMembers.women'}
 				}
 			}
@@ -37,8 +37,6 @@ class KvvCommuneGenderDistribution(View):
 	
 		# Create JSON response object.
 		resp = Response(response=json_util.dumps(gender_observation), mimetype='application/json')
-
-		print gender_observation
 	
 		# Return JSON response.
 		return resp
